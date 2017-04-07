@@ -1,0 +1,23 @@
+{
+  "name": "@npm-wearetriple/meister-doc-builder",
+  "version": "1.0.0",
+  "description": "Extract the documentation from all Meister player plugins and place them in a single directory.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@npm-wearetriple/js-dev": "^3.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "meister-doc-builder": "./index.js"
+  },
+  "keywords": [
+    "meister",
+    "player",
+    "documentation"
+  ],
+  "author": "Triple",
+  "license": "Apache-2.0"
+}
