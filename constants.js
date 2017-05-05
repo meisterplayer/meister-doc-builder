@@ -1,8 +1,10 @@
 module.exports = {
     MEISTER_CORE_MODULE_NAME: 'meisterplayer',
     MEISTER_CORE_DOC_NAME: 'Meister',
-    MEISTER_PLUGIN_PREFIX: 'meister-plugin',
     MEISTER_DOCS_DESTINATION: './meister-docs',
-    MEISTER_PATH: './node_modules/@npm-wearetriple',
+    MEISTER_PATHS: [
+        { path: './node_modules/@npm-wearetriple', prefix: 'meister-plugin-' },
+        { path: './node_modules/@meisterplayer', prefix: 'plugin-' },
+    ],
     README_FILE_NAME: 'README.md',
 };

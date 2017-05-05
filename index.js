@@ -12,23 +12,25 @@ const {
     mergeSourcesDestinations,
 } = require('./lib');
 
-const { MEISTER_DOCS_DESTINATION, MEISTER_PATH } = require('./constants');
+const { MEISTER_DOCS_DESTINATION, MEISTER_PATHS } = require('./constants');
 
 
 function copyDocs() {
-    fs.readdir(path.normalize(MEISTER_PATH), (err, files) => {
-        if (err) { throw err; }
+    MEISTER_PATHS.forEach((MEISTER_PATH) => {
+        fs.readdir(path.normalize(MEISTER_PATH.path), (err, files) => {
+            if (err) { throw err; }
 
-        const meisterDirectories = files.filter(isMeisterDirectory);
+            const meisterDirectories = files.filter(isMeisterDirectory.bind(null, MEISTER_PATH.prefix));
 
-        const destinationPaths = meisterDirectories.map(convertModuleName)
-            .map(createDestinationPaths(MEISTER_DOCS_DESTINATION));
-        const sourcePaths = meisterDirectories.map(createSourcePaths(MEISTER_PATH));
+            const destinationPaths = meisterDirectories.map(convertModuleName.bind(null, MEISTER_PATH.prefix))
+                .map(createDestinationPaths(MEISTER_DOCS_DESTINATION));
+            const sourcePaths = meisterDirectories.map(createSourcePaths(MEISTER_PATH));
 
-        const zippedSrcDst = mergeSourcesDestinations(sourcePaths, destinationPaths);
+            const zippedSrcDst = mergeSourcesDestinations(sourcePaths, destinationPaths);
 
-        zippedSrcDst.forEach((zip) => {
-            copyFile(zip.src, zip.dest, () => {});
+            zippedSrcDst.forEach((zip) => {
+                copyFile(zip.src, zip.dest, () => {});
+            });
         });
     });
 }
