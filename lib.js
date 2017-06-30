@@ -4,7 +4,6 @@ const path = require('path');
 const {
     MEISTER_CORE_MODULE_NAME,
     MEISTER_CORE_DOC_NAME,
-    README_FILE_NAME,
 } = require('./constants');
 
 function convertModuleName(prefix, moduleName) {
@@ -40,9 +39,9 @@ function createDestinationPaths(dirPath) {
     };
 }
 
-function createSourcePaths(dirPath) {
+function createSourcePaths(dirPath, type) {
     return function createSourceFilePath(modulePath) {
-        return path.normalize(`${dirPath}/${modulePath}/${README_FILE_NAME}`);
+        return path.normalize(`${dirPath}/${modulePath}/${type}`);
     };
 }
 

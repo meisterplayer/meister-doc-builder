@@ -12,8 +12,26 @@ const {
     mergeSourcesDestinations,
 } = require('./lib');
 
-const { MEISTER_DOCS_DESTINATION, MEISTER_PATHS } = require('./constants');
+const {
+    README_FILE_NAME,
+    CHANGELOG_FILE_NAME,
+    MEISTER_README_DESTINATION,
+    MEISTER_PATHS,
+    MEISTER_CHANGELOG_DESTINATION,
+} = require('./constants');
 
+
+let type = README_FILE_NAME;
+let destination = MEISTER_README_DESTINATION;
+if (
+    (process.argv[2] === '--changelog') ||
+    (process.argv[2] === '--changelogs') ||
+    (process.argv[2] === 'changelogs') ||
+    (process.argv[2] === 'changelog')
+    ) {
+    type = CHANGELOG_FILE_NAME;
+    destination = MEISTER_CHANGELOG_DESTINATION;
+}
 
 function copyDocs() {
     MEISTER_PATHS.forEach((MEISTER_PATH) => {
@@ -23,9 +41,9 @@ function copyDocs() {
             const meisterDirectories = files.filter(isMeisterDirectory.bind(null, MEISTER_PATH.prefix));
 
             const destinationPaths = meisterDirectories.map(convertModuleName.bind(null, MEISTER_PATH.prefix))
-                .map(createDestinationPaths(MEISTER_DOCS_DESTINATION));
+                .map(createDestinationPaths(destination));
 
-            const sourcePaths = meisterDirectories.map(createSourcePaths(MEISTER_PATH.path));
+            const sourcePaths = meisterDirectories.map(createSourcePaths(MEISTER_PATH.path, type));
             const zippedSrcDst = mergeSourcesDestinations(sourcePaths, destinationPaths);
 
             zippedSrcDst.forEach((zip) => {
@@ -35,7 +53,7 @@ function copyDocs() {
     });
 }
 
-makeDir(path.normalize(MEISTER_DOCS_DESTINATION), (err) => {
+makeDir(path.normalize(destination), (err) => {
     if (err) { throw err; }
     copyDocs();
 });
