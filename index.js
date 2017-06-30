@@ -24,8 +24,8 @@ function copyDocs() {
 
             const destinationPaths = meisterDirectories.map(convertModuleName.bind(null, MEISTER_PATH.prefix))
                 .map(createDestinationPaths(MEISTER_DOCS_DESTINATION));
-            const sourcePaths = meisterDirectories.map(createSourcePaths(MEISTER_PATH));
 
+            const sourcePaths = meisterDirectories.map(createSourcePaths(MEISTER_PATH.path));
             const zippedSrcDst = mergeSourcesDestinations(sourcePaths, destinationPaths);
 
             zippedSrcDst.forEach((zip) => {
